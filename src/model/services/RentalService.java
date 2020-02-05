@@ -6,9 +6,9 @@ import model.entities.Invoice;
 public class RentalService {
 	private Double pricePerHour;
 	private Double pricePerDay;
-	private BrasilTaxService taxService;
+	private TaxService taxService;
 	
-	public RentalService(Double pricePerHour, Double pricePerDay, BrasilTaxService taxService) {
+	public RentalService(Double pricePerHour, Double pricePerDay, TaxService taxService) {
 		this.pricePerHour = pricePerHour;
 		this.pricePerDay = pricePerDay;
 		this.taxService = taxService;
@@ -23,7 +23,7 @@ public class RentalService {
 		if(hour <= 12.0) {
 			basicPayment = Math.ceil(hour) * pricePerHour;
 		}else {
-			basicPayment = Math.ceil(hour) * pricePerDay;
+			basicPayment = Math.ceil(hour/24) * pricePerDay;
 		}
 		
 		double tax = taxService.tax(basicPayment);
